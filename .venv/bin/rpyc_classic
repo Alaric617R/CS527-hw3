@@ -1,0 +1,6 @@
+#!/Users/chen5219/Desktop/CS527/3_chen5219_HW3/.venv/bin/python3.11
+import sys
+from rpyc.cli.rpyc_classic import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main())

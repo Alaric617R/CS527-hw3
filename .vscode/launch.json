@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/chen5219/Desktop/CS527/3_chen5219_HW3/task04",
+      "program": "/Users/chen5219/Desktop/CS527/3_chen5219_HW3/task04/build/Debug/outDebug"
+    }
+  ]
+}
