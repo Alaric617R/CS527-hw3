@@ -1,0 +1,4 @@
+I first wrote a program to discover the stack canary for the 'vulnerable()' function. Since the canary has eight bytes, and each byte has 2^8=256 possibilities, I used a double for-loop to brute force the canary of the child process. In each for loop, I opened a new connection with the remote server and test the current growing canary. If the server responds then it means the guessed byte of the canary is correct. By brute-forcing we are able to get the full canary.
+Since the canary of the child process is the same with the parent process, and the parent process, which is the server, never aborts, we can hardcode our canary for our next step exploit.
+I have the final exploit in 'solve.py', which packed the payload including the canary. I found a gadget 'jmp *%rsp' in the 'yeet()' function. Then, overriding the return address with this gadget leads the program to execute our shellcode on the stack, thus obtaining the flag.
+

